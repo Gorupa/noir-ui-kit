@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIR UI — The Dark Editorial Design System</title>
+  <meta name="description" content="A pure CSS design system built for serious builders. Dark editorial aesthetic. Zero dependencies. Free tier on GitHub.">
+  <meta property="og:title" content="NOIR UI — Dark Editorial CSS Design System">
+  <meta property="og:description" content="The professional-grade design system for agencies, portfolios, and SaaS. Pure CSS, zero JS.">
+  <link rel="stylesheet" href="css/noir.css">
+
+  <style>
+    /* ── Page-level styles (not part of the framework) ── */
+
+    /* Scroll reveal animation */
+    .n-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .n-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--n-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(196,151,61,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(196,151,61,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--n-56);
+      width: 100%;
+    }
+    .hero-wordmark {
+      font-family: var(--n-display);
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--n-text);
+      position: relative;
+      display: inline-block;
+    }
+    .hero-wordmark::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--n-gold) 0%, transparent 100%);
+      margin-top: 16px;
+    }
+    .hero-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--n-gold);
+      margin-bottom: var(--n-24);
+      display: block;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--n-muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: var(--n-32);
+    }
+    .hero-ctas {
+      display: flex;
+      gap: var(--n-12);
+      flex-wrap: wrap;
+    }
+    .hero-meta {
+      margin-top: var(--n-32);
+      display: flex;
+      gap: var(--n-24);
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--n-8);
+      font-size: 0.78rem;
+      color: var(--n-muted);
+    }
+    .hero-meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--n-gold);
+      flex-shrink: 0;
+    }
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--n-12);
+    }
+    .hero-preview-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-24);
+    }
+    .hero-preview-card:nth-child(2) { border-color: var(--n-gold); margin-inline: 16px; }
+    .code-pill {
+      display: inline-block;
+      font-family: var(--n-mono);
+      font-size: 0.72rem;
+      color: var(--n-gold-lt);
+      background: var(--n-surface-2);
+      border: 1px solid var(--n-border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-bottom: var(--n-8);
+    }
+
+    /* ── Eyebrow bar ─────────────────────────────── */
+    .eyebrow-bar {
+      background: var(--n-surface);
+      border-bottom: 1px solid var(--n-border);
+      padding: var(--n-12) 0;
+      overflow: hidden;
+    }
+    .eyebrow-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--n-32);
+      flex-wrap: wrap;
+    }
+    .eyebrow-item {
+      display: flex;
+      align-items: center;
+      gap: var(--n-8);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--n-muted);
+      white-space: nowrap;
+    }
+    .eyebrow-icon { color: var(--n-gold); font-size: 14px; }
+
+    /* ── Section headers ─────────────────────────── */
+    .section-header {
+      margin-bottom: var(--n-56);
+    }
+    .section-header .n-caption { margin-bottom: var(--n-12); }
+    .section-header .n-h2 { margin-bottom: var(--n-16); }
+
+    /* ── Component tabs ──────────────────────────── */
+    .demo-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius) var(--n-radius) 0 0;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    .demo-tab {
+      padding: 10px 20px;
+      font-family: var(--n-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: var(--n-surface);
+      color: var(--n-muted);
+      border: none;
+      border-right: 1px solid var(--n-border);
+      cursor: pointer;
+      transition: all var(--n-transition);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .demo-tab:hover  { color: var(--n-text); background: var(--n-surface-2); }
+    .demo-tab.active { color: var(--n-gold); background: var(--n-surface-2); }
+    .demo-tab:last-child { border-right: none; }
+
+    .demo-panels {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-top: none;
+      border-radius: 0 0 var(--n-radius) var(--n-radius);
+      padding: var(--n-32);
+      min-height: 240px;
+    }
+    .demo-panel { display: none; }
+    .demo-panel.active { display: flex; flex-wrap: wrap; gap: var(--n-16); align-items: flex-start; }
+
+    /* ── Code block display ──────────────────────── */
+    .code-block { position: relative; }
+    .code-block .copy-btn {
+      position: absolute;
+      top: var(--n-12); right: var(--n-12);
+      padding: 4px 10px;
+      font-family: var(--n-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: var(--n-surface-3);
+      border: 1px solid var(--n-border-2);
+      border-radius: 3px;
+      color: var(--n-muted);
+      cursor: pointer;
+      transition: color var(--n-transition);
+    }
+    .code-block .copy-btn:hover { color: var(--n-gold); }
+
+    /* ── Premium locked preview ──────────────────── */
+    .locked-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--n-16);
+      position: relative;
+    }
+    .locked-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, var(--n-bg) 70%);
+      pointer-events: none;
+    }
+    .locked-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-24);
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+    .locked-overlay {
+      position: relative;
+      text-align: center;
+      padding: var(--n-40) 0 var(--n-16);
+      z-index: 2;
+    }
+
+    /* ── Pricing cards ───────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--n-24);
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-32);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .pricing-card--featured {
+      border-color: var(--n-gold);
+      box-shadow: 0 0 40px var(--n-gold-glow);
+    }
+    .pricing-tier-badge {
+      position: absolute;
+      top: -1px; right: -1px;
+      background: var(--n-gold);
+      color: #070707;
+      font-family: var(--n-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 0 var(--n-radius) 0 4px;
+    }
+    .pricing-name {
+      font-family: var(--n-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--n-text);
+      margin-bottom: var(--n-8);
+    }
+    .pricing-price {
+      font-family: var(--n-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--n-text);
+      line-height: 1;
+      margin: var(--n-16) 0 var(--n-4);
+    }
+    .pricing-price span {
+      font-family: var(--n-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--n-muted);
+    }
+    .pricing-inr {
+      font-size: 0.85rem;
+      color: var(--n-muted);
+      margin-bottom: var(--n-24);
+    }
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--n-border);
+      margin-block: var(--n-24);
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--n-12);
+      flex: 1;
+      margin-bottom: var(--n-32);
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--n-8);
+      font-size: 0.875rem;
+      color: var(--n-muted);
+      line-height: 1.5;
+    }
+    .pricing-features li .check { color: var(--n-gold); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .pricing-features li .cross { color: var(--n-faint); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .pricing-actions { display: flex; flex-direction: column; gap: var(--n-8); margin-top: auto; }
+    .pricing-note {
+      font-size: 0.72rem;
+      color: var(--n-muted);
+      text-align: center;
+      margin-top: var(--n-12);
+      line-height: 1.5;
+    }
+
+    /* PayPal container sizing */
+    #paypal-btn-artisan,
+    #paypal-btn-maison  { min-height: 50px; position: relative; z-index: 10; }
+
+    /* ── Testimonials ────────────────────────────── */
+    .review-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-32);
+    }
+    .review-stars { color: var(--n-gold); letter-spacing: 2px; font-size: 14px; margin-bottom: var(--n-16); }
+    .review-text { font-size: 0.95rem; color: var(--n-muted); line-height: 1.75; margin-bottom: var(--n-24); font-style: italic; }
+    .review-author { font-size: 0.78rem; font-weight: 600; color: var(--n-text); letter-spacing: 0.5px; }
+    .review-location { font-size: 0.72rem; color: var(--n-muted); }
+
+    /* ── Compare section ─────────────────────────── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .compare-table th {
+      padding: var(--n-12) var(--n-16);
+      font-family: var(--n-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--n-muted);
+      border-bottom: 1px solid var(--n-border);
+      text-align: center;
+    }
+    .compare-table th:first-child { text-align: left; }
+    .compare-table td {
+      padding: var(--n-12) var(--n-16);
+      border-bottom: 1px solid var(--n-border);
+      color: var(--n-muted);
+      text-align: center;
+      font-size: 0.875rem;
+    }
+    .compare-table td:first-child { text-align: left; color: var(--n-text); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .yes { color: var(--n-gold); font-size: 14px; }
+    .compare-table .no  { color: var(--n-faint); font-size: 14px; }
+    .compare-table td.featured { color: var(--n-text); font-weight: 500; }
+
+    /* ── Footer ──────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--n-border);
+      padding-block: var(--n-40);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--n-24);
+      flex-wrap: wrap;
+    }
+    .footer-name {
+      font-family: var(--n-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--n-text);
+    }
+    .footer-links { display: flex; gap: var(--n-24); }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--n-muted);
+      text-decoration: none;
+      transition: color var(--n-transition);
+    }
+    .footer-links a:hover { color: var(--n-gold); }
+    .footer-copy { font-size: 0.75rem; color: var(--n-faint); }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+      .locked-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero-wordmark { font-size: clamp(4rem, 18vw, 7rem); }
+      .demo-tabs { overflow-x: auto; }
+      .pricing-grid { max-width: 100%; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  HERO                                               -->
+<!-- ═══════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="n-container">
+    <div class="hero-inner">
+
+      <div class="hero-left">
+        <span class="hero-sub">Pure CSS Design System</span>
+        <div class="hero-wordmark">NOIR</div>
+
+        <p class="hero-desc">
+          Where the web gets serious. A dark editorial design system for agencies,
+          portfolios, and SaaS builders who want their work to command attention —
+          not blend in.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="https://github.com/Gorupa/noir-ui-kit" target="_blank" class="n-btn n-btn--lg">
+            ↓ Free on GitHub
+          </a>
+          <a href="#pricing" class="n-btn n-btn--ghost n-btn--lg">
+            See Pricing →
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Pure CSS
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Zero Dependencies
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> MIT License
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Cloudflare Ready
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: live mini-preview stack -->
+      <div class="hero-right">
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-card</span>
+          <div style="font-family:var(--n-display);font-size:1.3rem;margin-bottom:8px;">Agency Portfolio</div>
+          <p style="font-size:0.85rem;color:var(--n-muted);margin-bottom:16px;">Dark editorial aesthetics that make your work stand out from every Tailwind template on Dribbble.</p>
+          <span class="n-badge">New Project</span>
+          <span class="n-badge n-badge--outline" style="margin-left:6px;">2026</span>
+        </div>
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-btn variants</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button class="n-btn n-btn--sm">Primary</button>
+            <button class="n-btn n-btn--ghost n-btn--sm">Ghost</button>
+            <button class="n-btn n-btn--outline n-btn--sm">Outline</button>
+          </div>
+        </div>
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-stat</span>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            <div class="n-stat"><span class="n-stat__value">12K</span><span class="n-stat__label">Downloads</span></div>
+            <div class="n-stat"><span class="n-stat__value">98%</span><span class="n-stat__label">CSS Only</span></div>
+            <div class="n-stat"><span class="n-stat__value">0<span style="font-size:1rem;">ms</span></span><span class="n-stat__label">JS Load</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  EYEBROW BAR                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="eyebrow-bar">
+  <div class="n-container">
+    <div class="eyebrow-inner">
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Under 14kb minified</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> BEM-style class naming</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> CSS custom properties</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Full browser support</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Also from @gorupa — KABOOM! UI</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  COMPONENT SHOWCASE — FREE TIER                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section" id="components" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+
+    <div class="section-header n-reveal">
+      <span class="n-caption">Included in Free Tier</span>
+      <div class="n-rule"></div>
+      <h2 class="n-h2">Components That Ship</h2>
+      <p class="n-lead" style="max-width:560px;">Everything here is in the free <code>noir.css</code> file — one download, one link tag, ready to use.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="demo-tabs n-reveal">
+      <button class="demo-tab active" id="tab-buttons"  onclick="switchTab('buttons')">Buttons</button>
+      <button class="demo-tab"        id="tab-cards"    onclick="switchTab('cards')">Cards</button>
+      <button class="demo-tab"        id="tab-badges"   onclick="switchTab('badges')">Badges & Tags</button>
+      <button class="demo-tab"        id="tab-forms"    onclick="switchTab('forms')">Forms</button>
+      <button class="demo-tab"        id="tab-type"     onclick="switchTab('type')">Typography</button>
+    </div>
+    <div class="demo-panels n-reveal">
+
+      <!-- Buttons -->
+      <div class="demo-panel active" id="panel-buttons">
+        <button class="n-btn">Primary Gold</button>
+        <button class="n-btn n-btn--ghost">Ghost</button>
+        <button class="n-btn n-btn--outline">Outline</button>
+        <button class="n-btn n-btn--danger">Danger</button>
+        <button class="n-btn n-btn--sm">Small</button>
+        <button class="n-btn n-btn--lg">Large</button>
+        <div style="width:100%;margin-top:8px;">
+          <button class="n-btn n-btn--full" style="max-width:320px;">Full Width</button>
+        </div>
+        <p class="n-caption" style="width:100%;margin-top:8px;">All transitions and hover states included. No JavaScript required.</p>
+      </div>
+
+      <!-- Cards -->
+      <div class="demo-panel" id="panel-cards">
+        <div class="n-card" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Standard</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Editorial Card</div>
+          <p class="n-body" style="font-size:0.85rem;">Default surface background with border. Hover to see gold glow.</p>
+        </div>
+        <div class="n-card n-card--glass" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Glass</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Glass Variant</div>
+          <p class="n-body" style="font-size:0.85rem;">Frosted glass effect using CSS backdrop-filter.</p>
+        </div>
+        <div class="n-card n-card--featured" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Featured</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Featured Card</div>
+          <p class="n-body" style="font-size:0.85rem;">Gold border and glow — for highlighted content or pricing.</p>
+        </div>
+      </div>
+
+      <!-- Badges & Tags -->
+      <div class="demo-panel" id="panel-badges">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <span class="n-badge">Gold</span>
+          <span class="n-badge n-badge--outline">Outline</span>
+          <span class="n-badge n-badge--success">Published</span>
+          <span class="n-badge n-badge--danger">Draft</span>
+          <span class="n-badge n-badge--warning">Review</span>
+        </div>
+        <div style="width:100%;margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <span class="n-tag">Editorial</span>
+          <span class="n-tag">Dark Mode</span>
+          <span class="n-tag">CSS Only</span>
+          <span class="n-tag">Portfolio</span>
+          <span class="n-tag">Hover me</span>
+        </div>
+        <p class="n-caption" style="width:100%;margin-top:8px;">Tags include a hover state. Badges are flat and decorative.</p>
+      </div>
+
+      <!-- Forms -->
+      <div class="demo-panel" id="panel-forms" style="flex-direction:column;">
+        <div style="max-width:420px;width:100%;">
+          <div class="n-form-group">
+            <label class="n-label">Full Name</label>
+            <input class="n-input" type="text" placeholder="Gaurav Kalal">
+          </div>
+          <div class="n-form-group">
+            <label class="n-label">Email</label>
+            <input class="n-input" type="email" placeholder="hello@yoursite.com">
+          </div>
+          <div class="n-form-group">
+            <label class="n-label">Message</label>
+            <textarea class="n-input n-textarea" placeholder="Tell me about your project..."></textarea>
+          </div>
+          <div id="noir-demo-input-wrap">
+            <label class="n-label">Live Preview</label>
+            <input class="n-input" id="noir-demo-input" type="text" placeholder="Type something..." oninput="updateNorDemo()">
+            <p class="n-body" id="noir-demo-preview" style="margin-top:8px;font-size:1rem;min-height:28px;font-family:var(--n-display);font-size:1.3rem;">Your text here, rendered live.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="demo-panel" id="panel-type" style="flex-direction:column;gap:20px;">
+        <div>
+          <span class="code-pill">.n-display</span>
+          <div class="n-display" style="font-size:clamp(2.5rem,6vw,4rem);margin-top:4px;">The Editorial Title</div>
+        </div>
+        <hr class="n-divider" style="margin:0;">
+        <div>
+          <span class="code-pill">.n-h2 + .n-lead</span>
+          <h2 class="n-h2" style="margin-top:4px;">Section Heading</h2>
+          <p class="n-lead" style="margin-top:8px;max-width:480px;">Lead paragraph text. Slightly larger with relaxed line-height for comfortable reading. Muted tone to create hierarchy below the heading.</p>
+        </div>
+        <hr class="n-divider" style="margin:0;">
+        <div style="display:flex;gap:var(--n-32);flex-wrap:wrap;align-items:flex-end;">
+          <div><span class="code-pill">.n-caption</span><div class="n-caption" style="margin-top:4px;">Caption Label</div></div>
+          <div><span class="code-pill">.n-gold</span><div class="n-gold" style="margin-top:4px;font-weight:600;">Gold Accent Text</div></div>
+          <div><span class="code-pill">code</span><code style="margin-top:4px;">inline code</code></div>
+        </div>
+      </div>
+
+    </div><!-- /demo-panels -->
+
+    <!-- Quick install code block -->
+    <div class="n-grid-2" style="margin-top:var(--n-56);gap:var(--n-24);">
+      <div class="n-reveal">
+        <span class="n-caption" style="margin-bottom:var(--n-12);display:block;">One Line Install</span>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copySnippet(this)">Copy</button>
+          <pre class="n-code">&lt;link rel="stylesheet" href="css/noir.css"&gt;</pre>
+        </div>
+        <p class="n-body n-mt-md" style="font-size:0.875rem;">No npm. No build step. Download <code>noir.css</code>, link it, ship it. The entire free framework is a single file under 14kb.</p>
+      </div>
+      <div class="n-reveal">
+        <span class="n-caption" style="margin-bottom:var(--n-12);display:block;">Example Usage</span>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copySnippet(this)">Copy</button>
+          <pre class="n-code">&lt;div class="n-card n-card--featured"&gt;
+  &lt;span class="n-badge"&gt;New&lt;/span&gt;
+  &lt;h3 class="n-h3"&gt;My Project&lt;/h3&gt;
+  &lt;p class="n-body"&gt;Description...&lt;/p&gt;
+  &lt;a href="#" class="n-btn"&gt;View →&lt;/a&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PREMIUM LOCKED PREVIEW                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+
+    <div class="section-header n-center n-reveal">
+      <span class="n-caption">Artisan &amp; Maison Tiers</span>
+      <div class="n-rule n-rule--wide" style="margin-inline:auto;"></div>
+      <h2 class="n-h2">The Full Arsenal</h2>
+      <p class="n-lead" style="max-width:520px;margin-inline:auto;">Unlock advanced components, pre-built templates, and the full JS toolkit — everything you need to build complete, polished products.</p>
+    </div>
+
+    <!-- Component feature grid -->
+    <div class="n-grid-3 n-reveal">
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Navigation &amp; Drawers</h4>
+        <p class="n-body" style="font-size:0.85rem;">Sticky navbar, mobile hamburger drawer, breadcrumb, and sidebar — all CSS only.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Data Tables</h4>
+        <p class="n-body" style="font-size:0.85rem;">Striped, bordered, sortable-ready tables with hover states and responsive scroll.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Progress &amp; Loaders</h4>
+        <p class="n-body" style="font-size:0.85rem;">Progress bars (indeterminate &amp; determinate), skeleton loading states, spinners.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Modals &amp; Overlays</h4>
+        <p class="n-body" style="font-size:0.85rem;">CSS-first modal system with backdrop, dialog sizing, and close mechanics.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Timeline &amp; Steps</h4>
+        <p class="n-body" style="font-size:0.85rem;">Vertical timeline, numbered stepper, and changelog components.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge n-badge--warning" style="margin-bottom:var(--n-16);">Artisan +</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Tabs &amp; Accordion</h4>
+        <p class="n-body" style="font-size:0.85rem;">Horizontal tabs, vertical tabs, FAQ accordion — no JS for static builds.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge" style="margin-bottom:var(--n-16);">Maison only</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Toast Notifications</h4>
+        <p class="n-body" style="font-size:0.85rem;">JS-powered toast queue. Top-right, bottom-center, with auto-dismiss timers.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge" style="margin-bottom:var(--n-16);">Maison only</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">6 Page Templates</h4>
+        <p class="n-body" style="font-size:0.85rem;">Landing page, pricing, portfolio, dashboard, blog, and agency — copy, paste, ship.</p>
+      </div>
+      <div class="n-card">
+        <span class="n-badge" style="margin-bottom:var(--n-16);">Maison only</span>
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Full JS Toolkit</h4>
+        <p class="n-body" style="font-size:0.85rem;">TabController, ModalManager, ToastQueue, ScrollReveal — modular, no frameworks.</p>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="n-card n-mt-xl n-reveal" style="padding:0;overflow:hidden;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding-left:var(--n-24);">Feature</th>
+            <th>Free</th>
+            <th style="color:var(--n-gold);">Artisan</th>
+            <th style="color:var(--n-gold);">Maison</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding-left:var(--n-24);">Core CSS (buttons, cards, forms, badges)</td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Typography scale + code block</td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Navigation + Sidebar drawer</td><td><span class="no">—</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Data tables, Progress, Timeline</td><td><span class="no">—</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Modals, Tabs, Accordion, Tooltips</td><td><span class="no">—</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">3 Page templates</td><td><span class="no">—</span></td><td><span class="yes">✦</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Toast notifications + JS toolkit</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">6 Page templates (landing, dash, blog…)</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✦</span></td></tr>
+          <tr><td style="padding-left:var(--n-24);">Priority email support</td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="yes">✦</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PRICING                                            -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section" id="pricing" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+
+    <div class="section-header n-center n-reveal">
+      <span class="n-caption">Choose Your Tier</span>
+      <div class="n-rule n-rule--wide" style="margin-inline:auto;"></div>
+      <h2 class="n-h2">Straightforward Pricing</h2>
+      <p class="n-lead" style="max-width:480px;margin-inline:auto;">Pay once. Yours forever. You get the ZIP on email within a few hours of payment.</p>
+    </div>
+
+    <div class="pricing-grid n-reveal">
+
+      <!-- FREE TIER -->
+      <div class="pricing-card">
+        <p class="n-caption" style="margin-bottom:var(--n-8);">For individuals</p>
+        <div class="pricing-name">The Frame</div>
+        <div class="pricing-price">Free</div>
+        <p class="pricing-inr">MIT License — forever</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li><span class="check">✦</span> Core CSS framework (14kb)</li>
+          <li><span class="check">✦</span> Buttons, cards, forms, badges</li>
+          <li><span class="check">✦</span> Typography scale + code block</li>
+          <li><span class="check">✦</span> Grid + layout utilities</li>
+          <li><span class="check">✦</span> 1 starter template</li>
+          <li><span class="cross">—</span> <span style="opacity:.4;">Premium components</span></li>
+          <li><span class="cross">—</span> <span style="opacity:.4;">Page templates</span></li>
+        </ul>
+        <div class="pricing-actions">
+          <a href="https://github.com/Gorupa/noir-ui-kit" target="_blank" class="n-btn n-btn--ghost n-btn--full">
+            ↓ Download on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- ARTISAN TIER -->
+      <div class="pricing-card pricing-card--featured">
+        <div class="pricing-tier-badge">Best Value</div>
+        <p class="n-caption" style="margin-bottom:var(--n-8);">For solo devs &amp; freelancers</p>
+        <div class="pricing-name" style="color:var(--n-gold);">The Artisan</div>
+        <div class="pricing-price">$20 <span>USD</span></div>
+        <p class="pricing-inr">or ₹1,650 INR</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li><span class="check">✦</span> Everything in Free</li>
+          <li><span class="check">✦</span> 30+ component library</li>
+          <li><span class="check">✦</span> Navigation + drawer</li>
+          <li><span class="check">✦</span> Tables, progress, timeline</li>
+          <li><span class="check">✦</span> Modals, tabs, accordion</li>
+          <li><span class="check">✦</span> 3 page templates</li>
+          <li><span class="cross">—</span> <span style="opacity:.4;">JS toolkit</span></li>
+        </ul>
+        <div class="pricing-actions">
+          <!-- PayPal -->
+          <div id="paypal-btn-artisan"></div>
+          <!-- UPI -->
+          <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav&cu=INR&am=1650&tn=NOIR%20UI%20Artisan%20Tier"
+             class="n-btn n-btn--outline n-btn--full">
+            🇮🇳 Pay ₹1,650 via UPI
+          </a>
+          <!-- WhatsApp (UPI users) -->
+          <a href="https://wa.me/917339992788?text=Hi%20Gaurav!%20I%20just%20paid%20%E2%82%B91650%20for%20NOIR%20UI%20Artisan%20Tier.%20Here%20is%20my%20screenshot:"
+             target="_blank"
+             class="n-btn n-btn--ghost n-btn--full" style="background:rgba(37,211,102,0.08);border-color:rgba(37,211,102,0.3);color:#25d166;">
+            📲 Step 2: Send Screenshot (UPI)
+          </a>
+        </div>
+        <p class="pricing-note">PayPal buyers are redirected automatically.<br>UPI buyers send screenshot to confirm.</p>
+      </div>
+
+      <!-- MAISON TIER -->
+      <div class="pricing-card">
+        <p class="n-caption" style="margin-bottom:var(--n-8);">For agencies &amp; studios</p>
+        <div class="pricing-name">The Maison</div>
+        <div class="pricing-price">$38 <span>USD</span></div>
+        <p class="pricing-inr">or ₹3,200 INR</p>
+        <hr class="pricing-divider">
+        <ul class="pricing-features">
+          <li><span class="check">✦</span> Everything in Artisan</li>
+          <li><span class="check">✦</span> Toast notification system</li>
+          <li><span class="check">✦</span> Full JS modular toolkit</li>
+          <li><span class="check">✦</span> 6 full page templates</li>
+          <li><span class="check">✦</span> Landing, dashboard, blog, agency</li>
+          <li><span class="check">✦</span> Commercial use — attribution free</li>
+          <li><span class="check">✦</span> Priority email support</li>
+        </ul>
+        <div class="pricing-actions">
+          <!-- PayPal -->
+          <div id="paypal-btn-maison"></div>
+          <!-- UPI -->
+          <a href="upi://pay?pa=gauravkalal@ybl&pn=Gaurav&cu=INR&am=3200&tn=NOIR%20UI%20Maison%20Tier"
+             class="n-btn n-btn--full">
+            🇮🇳 Pay ₹3,200 via UPI
+          </a>
+          <!-- WhatsApp (UPI users) -->
+          <a href="https://wa.me/917339992788?text=Hi%20Gaurav!%20I%20just%20paid%20%E2%82%B93200%20for%20NOIR%20UI%20Maison%20Tier.%20Here%20is%20my%20screenshot:"
+             target="_blank"
+             class="n-btn n-btn--ghost n-btn--full" style="background:rgba(37,211,102,0.08);border-color:rgba(37,211,102,0.3);color:#25d166;">
+            📲 Step 2: Send Screenshot (UPI)
+          </a>
+        </div>
+        <p class="pricing-note">PayPal buyers are redirected automatically.<br>UPI buyers send screenshot to confirm.</p>
+      </div>
+
+    </div><!-- /pricing-grid -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  TESTIMONIALS                                       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+
+    <div class="section-header n-center n-reveal">
+      <span class="n-caption">From the Community</span>
+      <div class="n-rule n-rule--wide" style="margin-inline:auto;"></div>
+      <h2 class="n-h2">Builders Already Using It</h2>
+    </div>
+
+    <div class="n-grid-3 n-reveal">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I have tried every free CSS kit on GitHub. NOIR is the first one that genuinely looks like a design decision rather than a component dump. Shipped my portfolio in a weekend."</p>
+        <div class="review-author">Priya M.</div>
+        <div class="review-location">Frontend Developer · Pune, India</div>
+      </div>
+      <div class="review-card" style="border-color:var(--n-gold);">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Dark editorial aesthetic is exactly what my agency needed. Clients immediately feel the quality difference. The Maison templates saved us at least 20 hours per project."</p>
+        <div class="review-author">Kieran O.</div>
+        <div class="review-location">Creative Director · Dublin, Ireland</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Also a fan of KABOOM from the same author — bought both. Completely different vibes, zero overlap. I switch between them depending on the brief. Both are worth it."</p>
+        <div class="review-author">Sasha T.</div>
+        <div class="review-location">Indie Maker · Berlin, Germany</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  FAQ                                                -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container" style="max-width:760px;">
+
+    <div class="section-header n-reveal">
+      <span class="n-caption">Questions</span>
+      <div class="n-rule"></div>
+      <h2 class="n-h2">Frequently Asked</h2>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:var(--n-16);" class="n-reveal">
+
+      <div class="n-card n-card--sm">
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">How do I receive the paid kit?</h4>
+        <p class="n-body" style="font-size:0.875rem;">PayPal buyers are redirected to WhatsApp automatically with their transaction ID. UPI buyers tap the WhatsApp button after paying and send a screenshot. I send the Drive link within a few hours.</p>
+      </div>
+
+      <div class="n-card n-card--sm">
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Can I use NOIR on client projects?</h4>
+        <p class="n-body" style="font-size:0.875rem;">The Free tier is MIT — use it anywhere, including commercial work. Artisan and Maison tiers include a commercial license. Maison removes the attribution requirement entirely.</p>
+      </div>
+
+      <div class="n-card n-card--sm">
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Does it work with React, Vue, or Svelte?</h4>
+        <p class="n-body" style="font-size:0.875rem;">Yes. NOIR is plain CSS — link the file and apply the classes anywhere. It works with any framework or static site. No build pipeline required.</p>
+      </div>
+
+      <div class="n-card n-card--sm">
+        <h4 class="n-h4" style="margin-bottom:var(--n-8);">Is NOIR different from KABOOM! UI?</h4>
+        <p class="n-body" style="font-size:0.875rem;">Completely. KABOOM is bold, comic-book chaos — loud and retro. NOIR is clean, dark, editorial — for professional and agency work. Both are from the same author and built to the same quality standard.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  FINAL CTA                                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="n-section--lg" style="text-align:center;border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+    <div class="n-reveal">
+      <span class="n-caption" style="margin-bottom:var(--n-16);display:block;">Start Building</span>
+      <h2 class="n-display" style="font-size:clamp(3rem,8vw,6rem);margin-bottom:var(--n-24);">NOIR</h2>
+      <p class="n-lead" style="max-width:440px;margin:0 auto var(--n-32);">Download the free tier. Build something that doesn't look like everyone else's website.</p>
+      <div style="display:flex;gap:var(--n-12);justify-content:center;flex-wrap:wrap;">
+        <a href="https://github.com/Gorupa/noir-ui-kit" target="_blank" class="n-btn n-btn--xl">↓ Free on GitHub</a>
+        <a href="#pricing" class="n-btn n-btn--ghost n-btn--xl">See Premium Tiers</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  FOOTER                                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="n-container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-name">NOIR</div>
+        <div class="n-caption" style="margin-top:4px;">The Dark Editorial Design System</div>
+      </div>
+      <nav class="footer-links">
+        <a href="https://github.com/Gorupa/noir-ui-kit" target="_blank">GitHub</a>
+        <a href="https://github.com/Gorupa/kaboom-ui-kit" target="_blank">KABOOM! UI</a>
+        <a href="https://wa.me/917339992788" target="_blank">WhatsApp</a>
+        <a href="#components">Components</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <div>
+        <div class="footer-copy">Built by <a href="https://github.com/gorupa" target="_blank" style="color:var(--n-gold);text-decoration:none;">@gorupa</a></div>
+        <div class="footer-copy" style="margin-top:4px;">Free tier — MIT License</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- PayPal SDK — same Client ID as KABOOM -->
+<script src="https://www.paypal.com/sdk/js?client-id=AWR-vD0rPDrCeN2gfGlN7OfKljkuZ9ra2S-TKObohBorjN1pyriZ83zGp-oXcGj8VxHN53FKFpbAvOgq&currency=USD"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
