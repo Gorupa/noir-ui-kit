@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NOIR UI — The Dark Editorial Design System</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <meta name="description" content="A pure CSS design system built for serious builders. Dark editorial aesthetic. Zero dependencies. Free tier on GitHub.">
   <meta property="og:title" content="NOIR UI — Dark Editorial CSS Design System">
   <meta property="og:description" content="The professional-grade design system for agencies, portfolios, and SaaS. Pure CSS, zero JS.">
@@ -439,6 +438,9 @@
 
 <body>
 
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  HERO                                               -->
+<!-- ═══════════════════════════════════════════════════ -->
 <header class="hero">
   <div class="n-container">
     <div class="hero-inner">
@@ -478,6 +480,7 @@
         </div>
       </div>
 
+      <!-- Right: live mini-preview stack -->
       <div class="hero-right">
         <div class="hero-preview-card">
           <span class="code-pill">.n-card</span>
@@ -508,6 +511,9 @@
   </div>
 </header>
 
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  EYEBROW BAR                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
 <div class="eyebrow-bar">
   <div class="n-container">
     <div class="eyebrow-inner">
@@ -520,6 +526,9 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  COMPONENT SHOWCASE — FREE TIER                     -->
+<!-- ═══════════════════════════════════════════════════ -->
 <section class="n-section" id="components" style="border-bottom:1px solid var(--n-border);">
   <div class="n-container">
 
@@ -530,6 +539,7 @@
       <p class="n-lead" style="max-width:560px;">Everything here is in the free <code>noir.css</code> file — one download, one link tag, ready to use.</p>
     </div>
 
+    <!-- Tabs -->
     <div class="demo-tabs n-reveal">
       <button class="demo-tab active" id="tab-buttons"  onclick="switchTab('buttons')">Buttons</button>
       <button class="demo-tab"        id="tab-cards"    onclick="switchTab('cards')">Cards</button>
@@ -539,6 +549,7 @@
     </div>
     <div class="demo-panels n-reveal">
 
+      <!-- Buttons -->
       <div class="demo-panel active" id="panel-buttons">
         <button class="n-btn">Primary Gold</button>
         <button class="n-btn n-btn--ghost">Ghost</button>
@@ -552,6 +563,7 @@
         <p class="n-caption" style="width:100%;margin-top:8px;">All transitions and hover states included. No JavaScript required.</p>
       </div>
 
+      <!-- Cards -->
       <div class="demo-panel" id="panel-cards">
         <div class="n-card" style="flex:1;min-width:220px;max-width:300px;">
           <span class="n-caption" style="margin-bottom:8px;display:block;">Standard</span>
@@ -563,14 +575,4 @@
           <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Glass Variant</div>
           <p class="n-body" style="font-size:0.85rem;">Frosted glass effect using CSS backdrop-filter.</p>
         </div>
-        <div class="n-card n-card--featured" style="flex:1;min-width:220px;max-width:300px;">
-          <span class="n-caption" style="margin-bottom:8px;display:block;">Featured</span>
-          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Featured Card</div>
-          <p class="n-body" style="font-size:0.85rem;">Gold border and glow — for highlighted content or pricing.</p>
-        </div>
-      </div>
-
-      <div class="demo-panel" id="panel-badges">
-        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-          <span class="n-badge">Gold</span>
-          <span class="n-badge n-badge--outl
+        <div class="n-card n-card--featured" style="flex:1;min-width:220px
