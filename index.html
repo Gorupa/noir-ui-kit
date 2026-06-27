@@ -1,1457 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  if (window.location.hostname === "velvetindex.pages.dev") {
-    window.location.replace("https://velvetindex.org" + window.location.pathname);
-  }
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velvet Index | The Registry of Unsung Legacies</title>
-    <meta name="description" content="A beautifully curated archive dedicated to women leaders whose monumental contributions were overlooked by mainstream history.">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="shortcut icon" href="/favicon-32x32.png">
-    <link rel="apple-touch-icon" href="/favicon-32x32.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIR UI — The Dark Editorial Design System</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <meta name="description" content="A pure CSS design system built for serious builders. Dark editorial aesthetic. Zero dependencies. Free tier on GitHub.">
+  <meta property="og:title" content="NOIR UI — Dark Editorial CSS Design System">
+  <meta property="og:description" content="The professional-grade design system for agencies, portfolios, and SaaS. Pure CSS, zero JS.">
+  <link rel="stylesheet" href="css/noir.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Page-level styles (not part of the framework) ── */
 
-    <style>
-        :root {
-            --cream:        #fbfaf7;
-            --warm:         #f4f1e8;
-            --dark:         #1a1a1a;
-            --muted:        #5a5a5a;
-            --light:        #9a9a9a;
-            --gold:         #9e7a44;
-            --gold-10:      rgba(158, 122, 68, 0.10);
-            --gold-25:      rgba(158, 122, 68, 0.25);
-            --white:        #ffffff;
-            --border:       #eceae4;
-            --border-mid:   #ddd9d0;
-            --ease:         cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* Scroll reveal animation */
+    .n-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .n-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--n-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(196,151,61,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(196,151,61,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--n-56);
+      width: 100%;
+    }
+    .hero-wordmark {
+      font-family: var(--n-display);
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--n-text);
+      position: relative;
+      display: inline-block;
+    }
+    .hero-wordmark::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--n-gold) 0%, transparent 100%);
+      margin-top: 16px;
+    }
+    .hero-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--n-gold);
+      margin-bottom: var(--n-24);
+      display: block;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--n-muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: var(--n-32);
+    }
+    .hero-ctas {
+      display: flex;
+      gap: var(--n-12);
+      flex-wrap: wrap;
+    }
+    .hero-meta {
+      margin-top: var(--n-32);
+      display: flex;
+      gap: var(--n-24);
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--n-8);
+      font-size: 0.78rem;
+      color: var(--n-muted);
+    }
+    .hero-meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--n-gold);
+      flex-shrink: 0;
+    }
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--n-12);
+    }
+    .hero-preview-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-24);
+    }
+    .hero-preview-card:nth-child(2) { border-color: var(--n-gold); margin-inline: 16px; }
+    .code-pill {
+      display: inline-block;
+      font-family: var(--n-mono);
+      font-size: 0.72rem;
+      color: var(--n-gold-lt);
+      background: var(--n-surface-2);
+      border: 1px solid var(--n-border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-bottom: var(--n-8);
+    }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--cream);
-            color: var(--dark);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
+    /* ── Eyebrow bar ─────────────────────────────── */
+    .eyebrow-bar {
+      background: var(--n-surface);
+      border-bottom: 1px solid var(--n-border);
+      padding: var(--n-12) 0;
+      overflow: hidden;
+    }
+    .eyebrow-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--n-32);
+      flex-wrap: wrap;
+    }
+    .eyebrow-item {
+      display: flex;
+      align-items: center;
+      gap: var(--n-8);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--n-muted);
+      white-space: nowrap;
+    }
+    .eyebrow-icon { color: var(--n-gold); font-size: 14px; }
 
-        .serif { font-family: 'Playfair Display', serif; font-weight: 400; }
+    /* ── Section headers ─────────────────────────── */
+    .section-header {
+      margin-bottom: var(--n-56);
+    }
+    .section-header .n-caption { margin-bottom: var(--n-12); }
+    .section-header .n-h2 { margin-bottom: var(--n-16); }
 
-        /* ─── ANNOUNCEMENT BAR ─── */
-        .announce-bar {
-            background: var(--dark);
-            color: #aaa;
-            text-align: center;
-            padding: 0.55rem 1rem;
-            font-size: 0.72rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-        .announce-bar em { color: var(--gold); font-style: normal; }
+    /* ── Component tabs ──────────────────────────── */
+    .demo-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius) var(--n-radius) 0 0;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    .demo-tab {
+      padding: 10px 20px;
+      font-family: var(--n-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: var(--n-surface);
+      color: var(--n-muted);
+      border: none;
+      border-right: 1px solid var(--n-border);
+      cursor: pointer;
+      transition: all var(--n-transition);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .demo-tab:hover  { color: var(--n-text); background: var(--n-surface-2); }
+    .demo-tab.active { color: var(--n-gold); background: var(--n-surface-2); }
+    .demo-tab:last-child { border-right: none; }
 
-        /* ─── HEADER ─── */
-        header {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .header-ornament {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .header-ornament span { width: 28px; height: 1px; background: var(--gold); display: block; }
-        .header-ornament i { color: var(--gold); font-size: 0.55rem; font-style: normal; }
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
-            font-weight: 400;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--dark);
-        }
-        .tagline {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--gold);
-            font-weight: 600;
-        }
+    .demo-panels {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-top: none;
+      border-radius: 0 0 var(--n-radius) var(--n-radius);
+      padding: var(--n-32);
+      min-height: 240px;
+    }
+    .demo-panel { display: none; }
+    .demo-panel.active { display: flex; flex-wrap: wrap; gap: var(--n-16); align-items: flex-start; }
 
-        /* ─── MARQUEE ─── */
-        .marquee-wrap {
-            overflow: hidden;
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 0.85rem 0;
-        }
-        .marquee-track {
-            display: flex;
-            gap: 2.5rem;
-            animation: marquee 55s linear infinite;
-            width: max-content;
-            white-space: nowrap;
-        }
-        .marquee-track:hover { animation-play-state: paused; }
-        .mq-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.9rem;
-            font-style: italic;
-            color: var(--muted);
-        }
-        .mq-dot { color: var(--gold); font-size: 0.55rem; line-height: 1.6; }
-        @keyframes marquee {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+    /* ── Code block display ──────────────────────── */
+    .code-block { position: relative; }
+    .code-block .copy-btn {
+      position: absolute;
+      top: var(--n-12); right: var(--n-12);
+      padding: 4px 10px;
+      font-family: var(--n-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: var(--n-surface-3);
+      border: 1px solid var(--n-border-2);
+      border-radius: 3px;
+      color: var(--n-muted);
+      cursor: pointer;
+      transition: color var(--n-transition);
+    }
+    .code-block .copy-btn:hover { color: var(--n-gold); }
 
-        /* ─── HERO ─── */
-        .hero {
-            max-width: 740px;
-            margin: 5.5rem auto 0;
-            text-align: center;
-            padding: 0 1.5rem;
-        }
-        .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.9rem;
-            margin-bottom: 1.8rem;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-        .hero-eyebrow::before,
-        .hero-eyebrow::after {
-            content: '';
-            width: 28px;
-            height: 1px;
-            background: var(--gold);
-        }
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-            font-size: clamp(2.2rem, 5vw, 3.6rem);
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-        }
-        .hero h1 em { font-style: italic; color: var(--gold); }
-        .hero p {
-            font-size: 1.05rem;
-            color: var(--muted);
-            max-width: 560px;
-            margin: 0 auto;
-            line-height: 1.85;
-        }
+    /* ── Premium locked preview ──────────────────── */
+    .locked-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--n-16);
+      position: relative;
+    }
+    .locked-grid::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, var(--n-bg) 70%);
+      pointer-events: none;
+    }
+    .locked-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-24);
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+    .locked-overlay {
+      position: relative;
+      text-align: center;
+      padding: var(--n-40) 0 var(--n-16);
+      z-index: 2;
+    }
 
-        /* ─── STATS STRIP ─── */
-        .stats-strip {
-            display: flex;
-            justify-content: center;
-            margin: 4rem 0 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            background: var(--white);
-        }
-        .stat-item {
-            flex: 1;
-            max-width: 180px;
-            text-align: center;
-            padding: 2rem 1rem;
-            border-right: 1px solid var(--border);
-        }
-        .stat-item:last-child { border-right: none; }
-        .stat-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.6rem;
-            color: var(--dark);
-            line-height: 1;
-            margin-bottom: 0.4rem;
-        }
-        .stat-lbl {
-            font-size: 0.67rem;
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            color: var(--light);
-            font-weight: 600;
-        }
+    /* ── Pricing cards ───────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--n-24);
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-32);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .pricing-card--featured {
+      border-color: var(--n-gold);
+      box-shadow: 0 0 40px var(--n-gold-glow);
+    }
+    .pricing-tier-badge {
+      position: absolute;
+      top: -1px; right: -1px;
+      background: var(--n-gold);
+      color: #070707;
+      font-family: var(--n-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 0 var(--n-radius) 0 4px;
+    }
+    .pricing-name {
+      font-family: var(--n-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--n-text);
+      margin-bottom: var(--n-8);
+    }
+    .pricing-price {
+      font-family: var(--n-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--n-text);
+      line-height: 1;
+      margin: var(--n-16) 0 var(--n-4);
+    }
+    .pricing-price span {
+      font-family: var(--n-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--n-muted);
+    }
+    .pricing-inr {
+      font-size: 0.85rem;
+      color: var(--n-muted);
+      margin-bottom: var(--n-24);
+    }
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--n-border);
+      margin-block: var(--n-24);
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--n-12);
+      flex: 1;
+      margin-bottom: var(--n-32);
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--n-8);
+      font-size: 0.875rem;
+      color: var(--n-muted);
+      line-height: 1.5;
+    }
+    .pricing-features li .check { color: var(--n-gold); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .pricing-features li .cross { color: var(--n-faint); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .pricing-actions { display: flex; flex-direction: column; gap: var(--n-8); margin-top: auto; }
+    .pricing-note {
+      font-size: 0.72rem;
+      color: var(--n-muted);
+      text-align: center;
+      margin-top: var(--n-12);
+      line-height: 1.5;
+    }
 
-        /* ─── TABS ─── */
-        .tab-nav {
-            display: flex;
-            justify-content: center;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 4rem;
-            padding: 0 1.5rem;
-        }
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 1.1rem 2.5rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--light);
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s var(--ease);
-        }
-        .tab-btn:hover { color: var(--dark); }
-        .tab-btn.active { color: var(--dark); }
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.35s var(--ease);
-        }
-        .tab-btn.active::after { width: 100%; }
+    /* PayPal container sizing */
+    #paypal-btn-artisan,
+    #paypal-btn-maison  { min-height: 50px; position: relative; z-index: 10; }
 
-        .tab-pane { display: none; animation: fadeUp 0.4s ease; padding: 0 1.5rem; max-width: 1240px; margin: 0 auto 7rem; }
-        .tab-pane.active { display: block; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+    /* ── Testimonials ────────────────────────────── */
+    .review-card {
+      background: var(--n-surface);
+      border: 1px solid var(--n-border);
+      border-radius: var(--n-radius);
+      padding: var(--n-32);
+    }
+    .review-stars { color: var(--n-gold); letter-spacing: 2px; font-size: 14px; margin-bottom: var(--n-16); }
+    .review-text { font-size: 0.95rem; color: var(--n-muted); line-height: 1.75; margin-bottom: var(--n-24); font-style: italic; }
+    .review-author { font-size: 0.78rem; font-weight: 600; color: var(--n-text); letter-spacing: 0.5px; }
+    .review-location { font-size: 0.72rem; color: var(--n-muted); }
 
-        /* ─── SECTION HEADER ─── */
-        .section-hd { text-align: center; margin-bottom: 3rem; }
-        .section-hd h2 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 0.8rem; }
-        .section-hd p { color: var(--muted); max-width: 560px; margin: 0 auto; font-size: 0.97rem; }
+    /* ── Compare section ─────────────────────────── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .compare-table th {
+      padding: var(--n-12) var(--n-16);
+      font-family: var(--n-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--n-muted);
+      border-bottom: 1px solid var(--n-border);
+      text-align: center;
+    }
+    .compare-table th:first-child { text-align: left; }
+    .compare-table td {
+      padding: var(--n-12) var(--n-16);
+      border-bottom: 1px solid var(--n-border);
+      color: var(--n-muted);
+      text-align: center;
+      font-size: 0.875rem;
+    }
+    .compare-table td:first-child { text-align: left; color: var(--n-text); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .yes { color: var(--n-gold); font-size: 14px; }
+    .compare-table .no  { color: var(--n-faint); font-size: 14px; }
+    .compare-table td.featured { color: var(--n-text); font-weight: 500; }
 
-        /* ─── CONTROLS: SEARCH + FILTER ─── */
-        .archive-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.4rem;
-            margin-bottom: 3.5rem;
-        }
-        .search-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-        }
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem;
-            color: var(--light);
-            pointer-events: none;
-        }
-        .search-wrap input {
-            width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.8rem;
-            border: 1px solid var(--border);
-            background: var(--white);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.9rem;
-            color: var(--dark);
-            outline: none;
-            transition: border-color 0.25s;
-        }
-        .search-wrap input:focus { border-color: var(--gold); }
-        .search-wrap input::placeholder { color: var(--light); }
+    /* ── Footer ──────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--n-border);
+      padding-block: var(--n-40);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--n-24);
+      flex-wrap: wrap;
+    }
+    .footer-name {
+      font-family: var(--n-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--n-text);
+    }
+    .footer-links { display: flex; gap: var(--n-24); }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--n-muted);
+      text-decoration: none;
+      transition: color var(--n-transition);
+    }
+    .footer-links a:hover { color: var(--n-gold); }
+    .footer-copy { font-size: 0.75rem; color: var(--n-faint); }
 
-        .filter-pills {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .pill {
-            padding: 0.4rem 1rem;
-            border: 1px solid var(--border);
-            background: var(--white);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        .pill:hover { border-color: var(--gold); color: var(--gold); }
-        .pill.active { background: var(--dark); color: var(--cream); border-color: var(--dark); }
-
-        /* ─── PROFILE GRID ─── */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 2rem; }
-
-        /* ─── PROFILE CARD ─── */
-        .profile-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s;
-            overflow: hidden;
-        }
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 40px rgba(26,26,26,0.10);
-            border-color: transparent;
-        }
-        .profile-card.hidden { display: none; }
-
-        .card-badge {
-            position: absolute;
-            top: 1rem; left: 1rem;
-            z-index: 2;
-            background: rgba(26,26,26,0.72);
-            backdrop-filter: blur(4px);
-            color: #fff;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            padding: 0.28rem 0.65rem;
-        }
-
-        .img-wrap {
-            width: 100%;
-            height: 290px;
-            overflow: hidden;
-            background: var(--warm);
-            position: relative;
-            flex-shrink: 0;
-        }
-        .img-wrap.shimmer {
-            background: linear-gradient(90deg, #f0ede6 25%, #e6e2d8 50%, #f0ede6 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease infinite;
-        }
-        .img-wrap.loaded { background: var(--warm); animation: none; }
-        @keyframes shimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
-            filter: grayscale(100%);
-            opacity: 0;
-            transition: filter 0.4s, transform 0.4s var(--ease), opacity 0.4s;
-        }
-        .card-img.visible { opacity: 1; }
-        .profile-card:hover .card-img { filter: grayscale(0%); transform: scale(1.04); }
-
-        .card-body { padding: 1.4rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-location { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 600; margin-bottom: 0.45rem; }
-        .card-name { font-family: 'Playfair Display', serif; font-size: 1.45rem; line-height: 1.2; margin-bottom: 0.75rem; }
-        .card-bio { font-size: 0.88rem; color: var(--muted); flex-grow: 1; line-height: 1.75; }
-        .card-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 1.2rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-        .card-era { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--light); font-weight: 500; }
-        .card-cta {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--gold);
-            opacity: 0;
-            transform: translateX(-6px);
-            transition: opacity 0.3s, transform 0.3s var(--ease);
-        }
-        .profile-card:hover .card-cta { opacity: 1; transform: translateX(0); }
-
-        .no-results {
-            display: none;
-            text-align: center;
-            padding: 5rem 1rem;
-            color: var(--muted);
-        }
-        .no-results.visible { display: block; }
-        .no-results h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
-
-        /* ─── COMMUNITY HONORS ─── */
-        .nomination-box {
-            background: var(--white);
-            max-width: 840px;
-            margin: 0 auto 4rem;
-            padding: 4rem 3rem;
-            border: 1px solid var(--border);
-            text-align: center;
-            position: relative;
-        }
-        .nomination-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
-        }
-        .nomination-box h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
-        .nomination-box > p { color: var(--muted); line-height: 1.85; max-width: 560px; margin: 0 auto 2rem; }
-        .rule-list { text-align: left; max-width: 480px; margin: 0 auto 2.5rem; list-style: none; }
-        .rule-list li {
-            padding: 0.65rem 0 0.65rem 1.6rem;
-            position: relative;
-            font-size: 0.9rem;
-            color: var(--muted);
-            border-bottom: 1px solid var(--border);
-        }
-        .rule-list li:last-child { border-bottom: none; }
-        .rule-list li::before { content: "—"; color: var(--gold); font-weight: 700; position: absolute; left: 0; }
-
-        .cs-header { text-align: center; margin-bottom: 2rem; }
-        .cs-header h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--dark); margin-bottom: 0.35rem; }
-        .cs-header p { font-size: 0.85rem; color: var(--muted); }
-
-        .cs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.1rem; }
-        .locked-card {
-            background: var(--white);
-            border: 1px dashed var(--border-mid);
-            height: 220px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-mid);
-            text-align: center;
-            padding: 1.5rem;
-            transition: all 0.3s;
-            position: relative;
-        }
-        .locked-card::before {
-            content: 'Class I · 2026';
-            position: absolute;
-            top: 0.8rem; left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            white-space: nowrap;
-            color: inherit;
-        }
-        .locked-card:hover { border-color: var(--gold-25); color: var(--gold); }
-        .locked-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
-        .locked-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
-
-        /* ─── DONATION ─── */
-        .donation-wrap {
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            padding: 6rem 1.5rem;
-        }
-        .donation-inner {
-            max-width: 960px;
-            margin: 0 auto;
-            display: grid;
-            gap: 4rem;
-            align-items: start;
-        }
-        @media (min-width: 768px) { .donation-inner { grid-template-columns: 1.2fr 0.8fr; } }
-
-        .donation-info h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1rem; line-height: 1.2; font-weight: 400; }
-        .donation-info p { color: var(--muted); font-size: 0.97rem; margin-bottom: 1rem; line-height: 1.85; }
-        .donation-note { font-size: 0.78rem; font-weight: 600; color: var(--gold); letter-spacing: 0.5px; }
-
-        .donation-card {
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            background: var(--cream);
-        }
-        .donation-lbl {
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
-            color: var(--muted);
-            margin-bottom: 1.5rem;
-        }
-        .tier-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.65rem; margin-bottom: 1.1rem; }
-        .tier-btn {
-            padding: 0.85rem 0;
-            border: 1px solid var(--border);
-            background: var(--white);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.05rem;
-            font-weight: 400;
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-        .tier-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .tier-btn.active { border-color: var(--gold); background: var(--gold); color: var(--white); }
-
-        .amt-wrap { position: relative; margin-bottom: 1.2rem; }
-        .amt-wrap span { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; font-size: 1rem; }
-        .amt-wrap input {
-            width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.3rem;
-            border: 1px solid var(--border);
-            background: var(--white);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.25s;
-        }
-        .amt-wrap input:focus { border-color: var(--gold); }
-
-        /* ─── BUTTONS ─── */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--dark);
-            color: var(--cream);
-            padding: 0.95rem 2.5rem;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.78rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border: 1px solid var(--dark);
-            cursor: pointer;
-            transition: all 0.3s var(--ease);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .btn-primary:hover { background: transparent; color: var(--dark); }
-
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: transparent;
-            color: var(--gold);
-            padding: 0.9rem 2.5rem;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.78rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border: 1px solid var(--gold);
-            cursor: pointer;
-            transition: all 0.3s var(--ease);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .btn-outline:hover { background: var(--gold); color: var(--white); }
-
-        /* ─── READER OVERLAY ─── */
-        .reader-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(251, 250, 247, 0.97);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            z-index: 200;
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            overflow-y: auto;
-            padding: 2rem 1rem 4rem;
-        }
-        .reader-overlay.open { opacity: 1; pointer-events: auto; }
-
-        .reader-progress-bar {
-            position: fixed;
-            top: 0; left: 0;
-            height: 3px;
-            width: 0;
-            background: var(--gold);
-            z-index: 201;
-            transition: width 0.1s linear;
-        }
-
-        .reader-close {
-            position: fixed;
-            top: 1.2rem;
-            right: 1.5rem;
-            z-index: 210;
-            width: 2.4rem;
-            height: 2.4rem;
-            border: 1px solid var(--border);
-            background: var(--white);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--muted);
-            transition: all 0.2s;
-        }
-        .reader-close:hover { border-color: var(--dark); color: var(--dark); }
-
-        .reader-box {
-            background: var(--white);
-            max-width: 660px;
-            width: 100%;
-            margin: auto;
-            border: 1px solid var(--border);
-            padding: 5rem 4rem;
-            position: relative;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.05);
-        }
-
-        .reader-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.2rem; align-items: center; }
-        .reader-field-tag {
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            color: var(--gold);
-            border: 1px solid var(--gold-25);
-            padding: 0.22rem 0.65rem;
-        }
-        .reader-loc-tag, .reader-era-tag {
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--light);
-            font-weight: 500;
-        }
-        .reader-loc-tag::before { content: '· '; }
-
-        .reader-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 0.6rem;
-        }
-        .reader-time {
-            font-size: 0.75rem;
-            color: var(--light);
-            display: block;
-            margin-bottom: 2.5rem;
-        }
-        .reader-rule { width: 36px; height: 1px; background: var(--gold); margin-bottom: 2.5rem; }
-
-        .reader-img {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            object-position: top center;
-            margin-bottom: 2.5rem;
-            display: none;
-        }
-
-        .reader-body { font-size: 1.08rem; line-height: 1.95; color: #282828; }
-        .reader-body p { margin-bottom: 1.5rem; }
-
-        .reader-wiki-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            color: var(--gold);
-            font-weight: 600;
-            font-size: 0.88rem;
-            text-decoration: none;
-            border-bottom: 1px solid var(--gold-25);
-            padding-bottom: 2px;
-            transition: border-color 0.2s;
-        }
-        .reader-wiki-link:hover { border-bottom-color: var(--gold); }
-
-        /* ─── QR MODAL ─── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 10, 10, 0.82);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.open { opacity: 1; pointer-events: auto; }
-
-        .modal-box {
-            background: var(--white);
-            padding: 3.5rem 3rem;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            border-top: 3px solid var(--gold);
-        }
-        .modal-close-btn {
-            position: absolute;
-            top: 1rem; right: 1.2rem;
-            font-size: 1.3rem;
-            cursor: pointer;
-            color: var(--muted);
-            transition: color 0.2s;
-            line-height: 1;
-        }
-        .modal-close-btn:hover { color: var(--dark); }
-        .modal-box h3 { font-family: 'Playfair Display', serif; font-size: 1.7rem; margin-bottom: 0.4rem; font-weight: 400; }
-        .modal-box p { font-size: 0.83rem; color: var(--muted); }
-        .qr-frame { background: var(--cream); padding: 1.1rem; display: inline-block; border: 1px solid var(--border); margin: 1.6rem 0 1.1rem; }
-        .qr-frame img { width: 185px; height: 185px; display: block; }
-        .upi-id { font-weight: 700; font-size: 0.97rem; background: var(--cream); padding: 0.55rem 1.2rem; border: 1px solid var(--border); display: inline-block; letter-spacing: 0.5px; }
-
-        /* ─── FOOTER ─── */
-        footer {
-            background: var(--dark);
-            color: var(--cream);
-            padding: 4rem 1.5rem 3rem;
-            text-align: center;
-        }
-        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.9rem; letter-spacing: 5px; text-transform: uppercase; color: var(--cream); text-decoration: none; display: inline-block; margin-bottom: 0.6rem; }
-        .footer-tagline { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 3.5px; color: var(--gold); margin-bottom: 2.2rem; }
-        .footer-links { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
-        .footer-links a { color: #666; font-size: 0.75rem; text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--cream); }
-        footer hr { border: none; border-top: 1px solid #2a2a2a; max-width: 380px; margin: 0 auto 1.5rem; }
-        .footer-copy { font-size: 0.77rem; color: #555; }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 768px) {
-            .stats-strip { flex-wrap: wrap; }
-            .stat-item { flex: 1 1 45%; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: none; }
-            .stat-item:nth-child(2n) { border-right: none; }
-            .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
-            .grid { grid-template-columns: 1fr; gap: 1.2rem; }
-            .cs-grid { grid-template-columns: repeat(2, 1fr); }
-            .tab-btn { padding: 0.9rem 1rem; font-size: 0.68rem; }
-            .reader-box { padding: 3rem 1.5rem; }
-            .nomination-box { padding: 3rem 1.5rem; }
-        }
-        @media (max-width: 480px) {
-            .logo { font-size: 1.8rem; letter-spacing: 3px; }
-            .hero h1 { font-size: 2rem; }
-        }
-
-        /* ─── ACCESSIBILITY ─── */
-        @media (prefers-reduced-motion: reduce) {
-            .marquee-track { animation: none; }
-            .card-img, .profile-card, .tab-btn::after { transition: none; }
-        }
-    </style>
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+      .locked-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero-wordmark { font-size: clamp(4rem, 18vw, 7rem); }
+      .demo-tabs { overflow-x: auto; }
+      .pricing-grid { max-width: 100%; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- Announcement -->
-    <div class="announce-bar">
-        Class I · Community Honors &nbsp;—&nbsp; <em>Nominations Now Open</em> &nbsp;·&nbsp; Deadline: December 2026
+<header class="hero">
+  <div class="n-container">
+    <div class="hero-inner">
+
+      <div class="hero-left">
+        <span class="hero-sub">Pure CSS Design System</span>
+        <div class="hero-wordmark">NOIR</div>
+
+        <p class="hero-desc">
+          Where the web gets serious. A dark editorial design system for agencies,
+          portfolios, and SaaS builders who want their work to command attention —
+          not blend in.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="https://github.com/Gorupa/noir-ui-kit" target="_blank" class="n-btn n-btn--lg">
+            ↓ Free on GitHub
+          </a>
+          <a href="#pricing" class="n-btn n-btn--ghost n-btn--lg">
+            See Pricing →
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Pure CSS
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Zero Dependencies
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> MIT License
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span> Cloudflare Ready
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-card</span>
+          <div style="font-family:var(--n-display);font-size:1.3rem;margin-bottom:8px;">Agency Portfolio</div>
+          <p style="font-size:0.85rem;color:var(--n-muted);margin-bottom:16px;">Dark editorial aesthetics that make your work stand out from every Tailwind template on Dribbble.</p>
+          <span class="n-badge">New Project</span>
+          <span class="n-badge n-badge--outline" style="margin-left:6px;">2026</span>
+        </div>
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-btn variants</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button class="n-btn n-btn--sm">Primary</button>
+            <button class="n-btn n-btn--ghost n-btn--sm">Ghost</button>
+            <button class="n-btn n-btn--outline n-btn--sm">Outline</button>
+          </div>
+        </div>
+        <div class="hero-preview-card">
+          <span class="code-pill">.n-stat</span>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            <div class="n-stat"><span class="n-stat__value">12K</span><span class="n-stat__label">Downloads</span></div>
+            <div class="n-stat"><span class="n-stat__value">98%</span><span class="n-stat__label">CSS Only</span></div>
+            <div class="n-stat"><span class="n-stat__value">0<span style="font-size:1rem;">ms</span></span><span class="n-stat__label">JS Load</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<div class="eyebrow-bar">
+  <div class="n-container">
+    <div class="eyebrow-inner">
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Under 14kb minified</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> BEM-style class naming</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> CSS custom properties</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Full browser support</div>
+      <div class="eyebrow-item"><span class="eyebrow-icon">◆</span> Also from @gorupa — KABOOM! UI</div>
+    </div>
+  </div>
+</div>
+
+<section class="n-section" id="components" style="border-bottom:1px solid var(--n-border);">
+  <div class="n-container">
+
+    <div class="section-header n-reveal">
+      <span class="n-caption">Included in Free Tier</span>
+      <div class="n-rule"></div>
+      <h2 class="n-h2">Components That Ship</h2>
+      <p class="n-lead" style="max-width:560px;">Everything here is in the free <code>noir.css</code> file — one download, one link tag, ready to use.</p>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="header-ornament">
-            <span></span>
-            <i>✦</i>
-            <span></span>
-        </div>
-        <a href="#" class="logo">Velvet Index</a>
-        <div class="tagline">The Registry of Unsung Legacies</div>
-    </header>
-
-    <!-- Name Marquee -->
-    <div class="marquee-wrap">
-        <div class="marquee-track" id="marqueeTrack"><!-- built by JS --></div>
+    <div class="demo-tabs n-reveal">
+      <button class="demo-tab active" id="tab-buttons"  onclick="switchTab('buttons')">Buttons</button>
+      <button class="demo-tab"        id="tab-cards"    onclick="switchTab('cards')">Cards</button>
+      <button class="demo-tab"        id="tab-badges"   onclick="switchTab('badges')">Badges & Tags</button>
+      <button class="demo-tab"        id="tab-forms"    onclick="switchTab('forms')">Forms</button>
+      <button class="demo-tab"        id="tab-type"     onclick="switchTab('type')">Typography</button>
     </div>
+    <div class="demo-panels n-reveal">
 
-    <main>
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-eyebrow">The Archive</div>
-            <h1>Honoring the women who <em>built</em>, sustained & transformed our world.</h1>
-            <p>A beautifully curated archive dedicated to regional, historical, and community women leaders whose contributions were too often absent from mainstream history.</p>
-        </section>
-
-        <!-- Stats -->
-        <div class="stats-strip">
-            <div class="stat-item">
-                <div class="stat-num" id="sProfiles">0</div>
-                <div class="stat-lbl">Profiles</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="sCountries">0</div>
-                <div class="stat-lbl">Centuries</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="sCenturies">0</div>
-                <div class="stat-lbl">Centuries</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="sFields">0</div>
-                <div class="stat-lbl">Fields</div>
-            </div>
+      <div class="demo-panel active" id="panel-buttons">
+        <button class="n-btn">Primary Gold</button>
+        <button class="n-btn n-btn--ghost">Ghost</button>
+        <button class="n-btn n-btn--outline">Outline</button>
+        <button class="n-btn n-btn--danger">Danger</button>
+        <button class="n-btn n-btn--sm">Small</button>
+        <button class="n-btn n-btn--lg">Large</button>
+        <div style="width:100%;margin-top:8px;">
+          <button class="n-btn n-btn--full" style="max-width:320px;">Full Width</button>
         </div>
+        <p class="n-caption" style="width:100%;margin-top:8px;">All transitions and hover states included. No JavaScript required.</p>
+      </div>
 
-        <!-- Tabs -->
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="switchTab('historical', this)">Historical Archive</button>
-            <button class="tab-btn" onclick="switchTab('community', this)">Community Honors</button>
+      <div class="demo-panel" id="panel-cards">
+        <div class="n-card" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Standard</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Editorial Card</div>
+          <p class="n-body" style="font-size:0.85rem;">Default surface background with border. Hover to see gold glow.</p>
         </div>
-
-        <!-- HISTORICAL ARCHIVE -->
-        <section id="historical-section" class="tab-pane active">
-            <div class="section-hd">
-                <h2 class="serif">The Historical Archive</h2>
-                <p>Curated from global encyclopedic records — pioneers whose monumental impact was too often eclipsed by the age they lived in.</p>
-            </div>
-
-            <div class="archive-controls">
-                <div class="search-wrap">
-                    <span class="search-icon">⌕</span>
-                    <input type="text" id="searchInput" placeholder="Search by name or country…" oninput="applyFilters()">
-                </div>
-                <div class="filter-pills" id="filterPills"><!-- built by JS --></div>
-            </div>
-
-            <div id="profiles-grid" class="grid"></div>
-            <div class="no-results" id="noResults">
-                <h3>No stories found.</h3>
-                <p>Try a different search or select All.</p>
-            </div>
-        </section>
-
-        <!-- COMMUNITY HONORS -->
-        <section id="community-section" class="tab-pane">
-            <div class="section-hd">
-                <h2 class="serif">The Velvet Honors</h2>
-                <p>Because the most powerful women aren't only in history books — they're in our communities.</p>
-            </div>
-
-            <div class="nomination-box">
-                <h3>Nominate a Local Pioneer</h3>
-                <p>Nominations are open year-round. Twice a year we review submissions and elevate 10 extraordinary contemporary women to be permanently featured on Velvet Index.</p>
-                <ul class="rule-list">
-                    <li><strong>Bi-Annual Selection</strong> — New classes announced every six months.</li>
-                    <li><strong>Top 10 Feature</strong> — Only ten stories are selected per cycle to ensure editorial depth.</li>
-                    <li><strong>Editorial Discretion</strong> — Final selections made by the curation team based on community impact.</li>
-                </ul>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScgeNLOJcARQmvIdtzqAXEfScy0slz3glMJ85YokN8VaeqV1A/viewform" target="_blank" class="btn-outline">Submit a Nomination</a>
-            </div>
-
-            <!-- FEATURED HONOREES (visible once community.json has entries) -->
-            <div id="community-featured" style="display:none;">
-                <div class="cs-header" style="margin-top:2rem;">
-                    <h3 class="serif">Class I · 2026 — Honorees</h3>
-                    <p>Extraordinary women selected from community nominations.</p>
-                </div>
-                <div id="communityGrid" class="grid" style="margin-bottom:3rem;"></div>
-            </div>
-
-            <!-- REMAINING / LOCKED SLOTS -->
-            <div id="community-slots">
-                <div class="cs-header">
-                    <h3 class="serif" id="csTitle">Class I · 2026</h3>
-                    <p id="csSubtitle">Ten profiles will be unveiled from community nominations.</p>
-                </div>
-                <div class="cs-grid" id="comingSoonGrid"><!-- built by JS --></div>
-            </div>
-        </section>
-
-        <!-- DONATION -->
-        <section class="donation-wrap">
-            <div class="donation-inner">
-                <div class="donation-info">
-                    <h2>Support<br>the Archive.</h2>
-                    <p>Velvet Index is a public initiative entirely free of intrusive advertisements. Your contributions go directly toward research, hosting, and ensuring these forgotten histories stay permanently documented on the web.</p>
-                    <p>Every contribution funds the discovery and documentation of one more unsung legacy.</p>
-                    <span class="donation-note">⬟ Secure processing via Native UPI (India) & PayPal (Global)</span>
-                </div>
-                <div class="donation-card">
-                    <div class="donation-lbl">Choose your contribution</div>
-                    <div class="tier-grid">
-                        <button class="tier-btn active" onclick="setAmount(100, this)">₹100</button>
-                        <button class="tier-btn" onclick="setAmount(500, this)">₹500</button>
-                        <button class="tier-btn" onclick="setAmount(1000, this)">₹1000</button>
-                    </div>
-                    <div class="amt-wrap">
-                        <span>₹</span>
-                        <input type="number" id="customAmount" value="100" min="1" placeholder="Custom amount">
-                    </div>
-                    <button onclick="processPayment()" class="btn-primary" style="width:100%; margin-bottom: 0.8rem;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/BHIM_logo.svg" alt="BHIM UPI" style="height: 18px;">
-                        Support via UPI (India) →
-                    </button>
-                    <a href="https://paypal.me/GKalal163" target="_blank" class="btn-outline" style="width:100%;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="height: 20px;">
-                        Overseas Donation ↗
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <a href="#" class="footer-logo">Velvet Index</a>
-        <div class="footer-tagline">The Registry of Unsung Legacies</div>
-        <div class="footer-links">
-            <a href="#" onclick="return switchTabLink('historical')">Historical Archive</a>
-            <a href="#" onclick="return switchTabLink('community')">Community Honors</a>
-            <a href="about.html">About & Mission</a>
-            <a href="editorial.html">Editorial Charter</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScgeNLOJcARQmvIdtzqAXEfScy0slz3glMJ85YokN8VaeqV1A/viewform" target="_blank">Submit Nomination</a>
-            <a href="https://www.instagram.com/velvetindex1?igsh=aGxjYzgxMXg2aWdk" target="_blank" rel="noopener">Instagram</a>
+        <div class="n-card n-card--glass" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Glass</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Glass Variant</div>
+          <p class="n-body" style="font-size:0.85rem;">Frosted glass effect using CSS backdrop-filter.</p>
         </div>
-        <hr>
-        <p class="footer-copy">© 2026 Velvet Index. An open-source public initiative for forgotten legacies.</p>
-    </footer>
-
-    <!-- Reader Overlay -->
-    <div id="readerOverlay" class="reader-overlay" onclick="overlayClickHandler(event)">
-        <div class="reader-progress-bar" id="readerBar"></div>
-        <div class="reader-box" id="readerBox">
-            <div class="reader-tags">
-                <span class="reader-field-tag" id="rField"></span>
-                <span class="reader-loc-tag" id="rLoc"></span>
-                <span class="reader-era-tag" id="rEra"></span>
-            </div>
-            <h2 class="reader-title" id="rTitle">Name</h2>
-            <span class="reader-time" id="rTime"></span>
-            <div class="reader-rule"></div>
-            <img id="rImg" class="reader-img" src="" alt="">
-            <div id="rBody" class="reader-body"><p>Loading the full story…</p></div>
+        <div class="n-card n-card--featured" style="flex:1;min-width:220px;max-width:300px;">
+          <span class="n-caption" style="margin-bottom:8px;display:block;">Featured</span>
+          <div style="font-family:var(--n-display);font-size:1.2rem;margin-bottom:8px;">Featured Card</div>
+          <p class="n-body" style="font-size:0.85rem;">Gold border and glow — for highlighted content or pricing.</p>
         </div>
-    </div>
-    <div class="reader-close" id="readerCloseBtn" onclick="closeReader()">✕</div>
+      </div>
 
-    <!-- Payment Modal — QR on desktop only -->
-    <div id="qrModal" class="modal-overlay" onclick="qrOverlayClick(event)">
-        <div class="modal-box">
-            <span class="modal-close-btn" onclick="closeModal()">✕</span>
-
-            <!-- DESKTOP: QR code view -->
-            <div id="payDesktop">
-                <h3>Scan to Support</h3>
-                <p>Open any UPI app and scan the code below</p>
-                <div class="qr-frame">
-                    <img id="qrImg" src="" alt="UPI QR Code">
-                </div>
-                <div class="upi-id">mrkalal@upi</div>
-                <p style="margin-top:1rem;font-size:0.78rem;color:var(--light);">
-                    Works with GPay, PhonePe, Paytm, BHIM & all UPI apps
-                </p>
-            </div>
-        </div>
-    </div>
-
-<script>
-/* ════════════════════════════════════════════════════
-   1. REGISTRY  —  25 profiles
-════════════════════════════════════════════════════ */
-const REGISTRY = [
-    // Science
-    { name: "Rosalind Franklin",         slug: "Rosalind_Franklin",                     loc: "United Kingdom",         field: "Science",          era: "20th C." },
-    { name: "Katherine Johnson",         slug: "Katherine_Johnson",                     loc: "United States",          field: "Science",          era: "20th C." },
-    { name: "Chien-Shiung Wu",           slug: "Chien-Shiung_Wu",                       loc: "China – United States",  field: "Science",          era: "20th C." },
-    { name: "Lise Meitner",             slug: "Lise_Meitner",                          loc: "Austria – Sweden",       field: "Science",          era: "20th C." },
-    { name: "Cecilia Payne-Gaposchkin", slug: "Cecilia_Payne-Gaposchkin",             loc: "United Kingdom – USA",   field: "Science",          era: "20th C." },
-    { name: "Emmy Noether",             slug: "Emmy_Noether",                          loc: "Germany",                field: "Science",          era: "20th C." },
-    { name: "Nettie Stevens",           slug: "Nettie_Stevens",                        loc: "United States",          field: "Science",          era: "20th C." },
-    { name: "Mary Anning",              slug: "Mary_Anning",                           loc: "United Kingdom",         field: "Science",          era: "19th C." },
-    { name: "Janaki Ammal",             slug: "Janaki_Ammal",                          loc: "Kerala, India",          field: "Science",          era: "20th C." },
-    // Medicine
-    { name: "Henrietta Lacks",          slug: "Henrietta_Lacks",                       loc: "United States",          field: "Medicine",         era: "20th C." },
-    { name: "Alice Ball",               slug: "Alice_Ball",                            loc: "United States",          field: "Medicine",         era: "20th C." },
-    // Technology
-    { name: "Ada Lovelace",             slug: "Ada_Lovelace",                          loc: "United Kingdom",         field: "Technology",       era: "19th C." },
-    { name: "Margaret Hamilton",        slug: "Margaret_Hamilton_(software_engineer)", loc: "United States",          field: "Technology",       era: "20th C." },
-    { name: "Hedy Lamarr",             slug: "Hedy_Lamarr",                           loc: "Austria – United States",field: "Technology",       era: "20th C." },
-    // Politics & Law
-    { name: "Begum Hazrat Mahal",       slug: "Begum_Hazrat_Mahal",                   loc: "India",                  field: "Politics",         era: "19th C." },
-    { name: "Jeannette Rankin",         slug: "Jeannette_Rankin",                      loc: "United States",          field: "Politics",         era: "20th C." },
-    { name: "Cornelia Sorabji",         slug: "Cornelia_Sorabji",                      loc: "India – United Kingdom", field: "Law",              era: "20th C." },
-    // Activism
-    { name: "Claudette Colvin",         slug: "Claudette_Colvin",                      loc: "United States",          field: "Activism",         era: "20th C." },
-    { name: "Bhikaji Cama",             slug: "Bhikaji_Cama",                          loc: "India",                  field: "Activism",         era: "20th C." },
-    { name: "Tara Rani Srivastava",     slug: "Tara_Rani_Srivastava",                 loc: "India",                  field: "Activism",         era: "20th C." },
-    { name: "Komako Kimura",            slug: "Komako_Kimura",                         loc: "Japan",                  field: "Activism",         era: "20th C." },
-    // Environment & Education
-    { name: "Wangari Maathai",          slug: "Wangari_Maathai",                       loc: "Kenya",                  field: "Environment",      era: "20th C." },
-    { name: "Gaura Devi",              slug: "Gaura_Devi",                            loc: "Uttarakhand, India",     field: "Environment",      era: "20th C." },
-    { name: "Savitribai Phule",         slug: "Savitribai_Phule",                      loc: "India",                  field: "Education",        era: "19th C." },
-    // Entrepreneurship
-    { name: "Madam C. J. Walker",       slug: "Madam_C._J._Walker",                   loc: "United States",          field: "Entrepreneurship", era: "20th C." },
-];
-
-/* ════════════════════════════════════════════════════
-   2. STATE
-════════════════════════════════════════════════════ */
-const wikiCache   = {};
-let   activeField = 'All';
-
-/* ════════════════════════════════════════════════════
-   3. BOOT
-════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-    buildMarquee();
-    animateStats();
-    buildFilterPills();
-    buildCards();
-    fetchAllProfiles();
-    loadCommunityProfiles();
-});
-
-/* ════════════════════════════════════════════════════
-   4. MARQUEE
-════════════════════════════════════════════════════ */
-function buildMarquee() {
-    const names   = REGISTRY.map(p => p.name);
-    const doubled = [...names, ...names]; // seamless loop
-    document.getElementById('marqueeTrack').innerHTML =
-        doubled.map(n => `<span class="mq-name">${n}</span><span class="mq-dot">✦</span>`).join('');
-}
-
-/* ════════════════════════════════════════════════════
-   5. STATS COUNTER
-════════════════════════════════════════════════════ */
-function animateStats() {
-    const countries = new Set(REGISTRY.map(p => p.loc.split('–')[0].split(',')[0].trim())).size;
-    const centuries = new Set(REGISTRY.map(p => p.era)).size;
-    const fields    = new Set(REGISTRY.map(p => p.field)).size;
-    countUp('sProfiles', REGISTRY.length);
-    countUp('sCountries', countries);
-    countUp('sCenturies', centuries);
-    countUp('sFields', fields);
-}
-
-function countUp(id, target) {
-    const el   = document.getElementById(id);
-    let   curr = 0;
-    const step = Math.max(1, Math.ceil(target / 28));
-    const t    = setInterval(() => {
-        curr = Math.min(curr + step, target);
-        el.textContent = curr;
-        if (curr >= target) clearInterval(t);
-    }, 45);
-}
-
-/* ════════════════════════════════════════════════════
-   6. FILTER PILLS
-════════════════════════════════════════════════════ */
-function buildFilterPills() {
-    const fields = ['All', ...new Set(REGISTRY.map(p => p.field))].sort((a,b) => a === 'All' ? -1 : a.localeCompare(b));
-    document.getElementById('filterPills').innerHTML = fields.map(f =>
-        `<button class="pill${f === 'All' ? ' active' : ''}" data-field="${f}" onclick="selectFilter(this)">${f}</button>`
-    ).join('');
-}
-
-function selectFilter(btn) {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    activeField = btn.dataset.field;
-    applyFilters();
-}
-
-function applyFilters() {
-    const q = document.getElementById('searchInput').value.toLowerCase().trim();
-    let   any = false;
-    REGISTRY.forEach(p => {
-        const card   = document.getElementById(`card-${p.slug}`);
-        if (!card) return;
-        const okF    = activeField === 'All' || p.field === activeField;
-        const okQ    = !q || p.name.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q) || p.field.toLowerCase().includes(q);
-        const show   = okF && okQ;
-        card.classList.toggle('hidden', !show);
-        if (show) any = true;
-    });
-    document.getElementById('noResults').classList.toggle('visible', !any);
-}
-
-/* ════════════════════════════════════════════════════
-   7. BUILD CARDS (skeletons)
-════════════════════════════════════════════════════ */
-function buildCards() {
-    const grid = document.getElementById('profiles-grid');
-    grid.innerHTML = '';
-    REGISTRY.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'profile-card';
-        card.id        = `card-${p.slug}`;
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-        card.onclick   = () => openReader(p.slug);
-        card.onkeydown = e => { if (e.key === 'Enter') openReader(p.slug); };
-        card.innerHTML = `
-            <span class="card-badge">${p.field}</span>
-            <div class="img-wrap shimmer" id="wrap-${p.slug}">
-                <img class="card-img" id="img-${p.slug}" src="" alt="${p.name}">
-            </div>
-            <div class="card-body">
-                <div class="card-location">${p.loc}</div>
-                <h3 class="card-name">${p.name}</h3>
-                <p class="card-bio" id="bio-${p.slug}">Retrieving her story…</p>
-                <div class="card-foot">
-                    <span class="card-era">${p.era}</span>
-                    <span class="card-cta">Read Story →</span>
-                </div>
-            </div>`;
-        grid.appendChild(card);
-    });
-}
-
-/* ════════════════════════════════════════════════════
-   8. WIKIPEDIA FETCHER
-════════════════════════════════════════════════════ */
-async function fetchAllProfiles() {
-    for (const profile of REGISTRY) {
-        await fetchWiki(profile);
-        await sleep(100); // gentle pacing
-    }
-}
-
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-async function fetchWiki(profile) {
-    try {
-        const url  = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(profile.slug)}`;
-        const res  = await fetch(url);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        wikiCache[profile.slug] = data;
-        hydrateCard(profile, data);
-    } catch {
-        fallbackCard(profile);
-    }
-}
-
-function hydrateCard(profile, data) {
-    // Image
-    const wrap = document.getElementById(`wrap-${profile.slug}`);
-    const img  = document.getElementById(`img-${profile.slug}`);
-    if (data.thumbnail?.source) {
-        img.src    = data.thumbnail.source.replace('/200px-', '/400px-');
-        img.onload  = () => { img.classList.add('visible'); wrap.classList.add('loaded'); };
-        img.onerror = () => { wrap.classList.add('loaded'); };
-    } else {
-        wrap.classList.add('loaded');
-    }
-    // Bio (first 2 sentences, capped at 190 chars)
-    const bio = document.getElementById(`bio-${profile.slug}`);
-    if (bio && data.extract) {
-        const sentences = data.extract.replace(/\n/g, ' ').split(/(?<=\.)\s+/);
-        let   preview   = sentences.slice(0, 2).join(' ').trim();
-        if (preview.length > 190) preview = preview.slice(0, 190) + '…';
-        else if (!preview.endsWith('.')) preview += '.';
-        bio.textContent = preview;
-    }
-}
-
-function fallbackCard(profile) {
-    const wrap = document.getElementById(`wrap-${profile.slug}`);
-    if (wrap) wrap.classList.add('loaded');
-    const bio  = document.getElementById(`bio-${profile.slug}`);
-    if (bio)  bio.textContent = 'A pioneering figure whose legacy continues to endure beyond the historical record.';
-}
-
-/* ════════════════════════════════════════════════════
-   9. READER
-════════════════════════════════════════════════════ */
-function openReader(slug) {
-    const profile = REGISTRY.find(p => p.slug === slug);
-    if (!profile) return;
-
-    // Meta
-    document.getElementById('rField').textContent = profile.field;
-    document.getElementById('rLoc').textContent   = profile.loc;
-    document.getElementById('rEra').textContent   = profile.era;
-    document.getElementById('rTitle').textContent  = profile.name;
-    document.getElementById('rTime').textContent  = '';
-
-    // Reset image + body
-    const img = document.getElementById('rImg');
-    img.style.display = 'none';
-    img.src = '';
-    document.getElementById('rBody').innerHTML = '<p style="color:var(--light)">Loading the full story…</p>';
-
-    // Open overlay
-    const overlay = document.getElementById('readerOverlay');
-    overlay.classList.add('open');
-    overlay.scrollTop = 0;
-    document.getElementById('readerCloseBtn').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    document.getElementById('readerBar').style.width = '0';
-    overlay.addEventListener('scroll', onReaderScroll);
-
-    // Populate
-    if (wikiCache[slug]) {
-        renderReader(profile, wikiCache[slug]);
-    } else {
-        fetchAndRender(slug, profile);
-    }
-}
-
-async function fetchAndRender(slug, profile) {
-    try {
-        const res  = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(slug)}`);
-        const data = await res.json();
-        wikiCache[slug] = data;
-        renderReader(profile, data);
-    } catch {
-        document.getElementById('rBody').innerHTML =
-            `<p>Could not load the story.</p>
-             <a class="reader-wiki-link" href="https://en.wikipedia.org/wiki/${slug}" target="_blank" rel="noopener">
-               Read on Wikipedia ↗
-             </a>`;
-    }
-}
-
-function renderReader(profile, data) {
-    // Image (prefer original, fallback to thumbnail)
-    const imgSrc = data.originalimage?.source || data.thumbnail?.source || '';
-    if (imgSrc) {
-        const img   = document.getElementById('rImg');
-        img.src     = imgSrc;
-        img.alt     = profile.name;
-        img.style.display = 'block';
-    }
-
-    // Reading time
-    const wordCount = (data.extract || '').split(/\s+/).length;
-    const mins      = Math.max(1, Math.ceil(wordCount / 200));
-    document.getElementById('rTime').textContent = `${mins} min read`;
-
-    // Body
-    const body = document.getElementById('rBody');
-    body.innerHTML = '';
-    const paras = (data.extract || '').split('\n').filter(s => s.trim().length > 0);
-    paras.forEach(para => {
-        const p = document.createElement('p');
-        p.textContent = para;
-        body.appendChild(p);
-    });
-
-    // Footer link
-    const link   = document.createElement('a');
-    link.href    = `https://en.wikipedia.org/wiki/${profile.slug}`;
-    link.target  = '_blank';
-    link.rel     = 'noopener noreferrer';
-    link.className = 'reader-wiki-link';
-    link.innerHTML = 'Continue reading on Wikipedia ↗';
-    body.appendChild(link);
-}
-
-function onReaderScroll() {
-    const overlay = document.getElementById('readerOverlay');
-    const box     = document.getElementById('readerBox');
-    const pct     = Math.min(100, (overlay.scrollTop / Math.max(1, box.scrollHeight - overlay.clientHeight)) * 100);
-    document.getElementById('readerBar').style.width = pct + '%';
-}
-
-function closeReader() {
-    const overlay = document.getElementById('readerOverlay');
-    overlay.classList.remove('open');
-    overlay.removeEventListener('scroll', onReaderScroll);
-    document.getElementById('readerCloseBtn').style.display = 'none';
-    document.body.style.overflow = '';
-}
-
-function overlayClickHandler(e) {
-    if (e.target === document.getElementById('readerOverlay')) closeReader();
-}
-
-/* ════════════════════════════════════════════════════
-   10. TAB NAVIGATION
-════════════════════════════════════════════════════ */
-function switchTab(id, btn) {
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id + '-section').classList.add('active');
-    btn.classList.add('active');
-}
-
-function switchTabLink(name) {
-    const btn = document.querySelector(`.tab-btn[onclick*="${name}"]`);
-    if (btn) switchTab(name, btn);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return false;
-}
-
-/* ════════════════════════════════════════════════════
-   11. COMMUNITY HONORS — JSON LOADER
-   Fetches community.json. If featured profiles exist,
-   renders them as cards. Remaining 10 slots stay locked.
-════════════════════════════════════════════════════ */
-async function loadCommunityProfiles() {
-    try {
-        const res  = await fetch('./community.json');
-        if (!res.ok) throw new Error('not found');
-        const data = await res.json();
-        const featured = (data.profiles || []).filter(p => p.featured === true);
-        if (featured.length > 0) {
-            renderCommunityCards(featured, data._meta?.r2_bucket || '');
-        } else {
-            renderLockedSlots(10);
-        }
-    } catch {
-        renderLockedSlots(10); // graceful fallback when file absent
-    }
-}
-
-function renderCommunityCards(profiles, r2Base) {
-    const grid = document.getElementById('communityGrid');
-    grid.innerHTML = '';
-
-    profiles.forEach(p => {
-        const imgSrc = p.image || (r2Base ? `${r2Base}/community/${p.slug}.jpg` : '');
-        const card   = document.createElement('div');
-        card.className = 'profile-card';
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-        card.onclick   = () => openCommunityReader(p);
-        card.onkeydown = e => { if (e.key === 'Enter') openCommunityReader(p); };
-        card.innerHTML = `
-            <span class="card-badge">${p.field}</span>
-            <div class="img-wrap${imgSrc ? '' : ' shimmer'}" id="cwrap-${p.slug}">
-                ${imgSrc
-                    ? `<img class="card-img" src="${imgSrc}" alt="${p.name}"
-                        onload="this.classList.add('visible');this.closest('.img-wrap').classList.add('loaded')"
-                        onerror="this.closest('.img-wrap').classList.add('loaded')">`
-                    : ''}
-            </div>
-            <div class="card-body">
-                <div class="card-location">${p.location}</div>
-                <h3 class="card-name">${p.name}</h3>
-                <p class="card-bio">${p.short_bio}</p>
-                <div class="card-foot">
-                    <span class="card-era">${p.class}</span>
-                    <span class="card-cta">Read Story →</span>
-                </div>
-            </div>`;
-        grid.appendChild(card);
-    });
-
-    document.getElementById('community-featured').style.display = 'block';
-
-    const remaining = 10 - profiles.length;
-    if (remaining > 0) {
-        document.getElementById('csTitle').textContent    = 'Remaining Slots — Class I · 2026';
-        document.getElementById('csSubtitle').textContent = `${remaining} more stories to be announced.`;
-        renderLockedSlots(remaining);
-    } else {
-        document.getElementById('community-slots').style.display = 'none';
-    }
-}
-
-function renderLockedSlots(count) {
-    document.getElementById('comingSoonGrid').innerHTML =
-        Array.from({ length: count }, (_, i) => `
-        <div class="locked-card">
-            <div class="locked-icon">✦</div>
-            <div class="locked-lbl">Slot ${String(i + 1).padStart(2, '0')}</div>
-        </div>`).join('');
-}
-
-function openCommunityReader(profile) {
-    document.getElementById('rField').textContent = profile.field;
-    document.getElementById('rLoc').textContent   = profile.location;
-    document.getElementById('rEra').textContent   = profile.class;
-    document.getElementById('rTitle').textContent  = profile.name;
-
-    const words = ((profile.story || '') + ' ' + (profile.short_bio || '')).split(/\s+/).length;
-    document.getElementById('rTime').textContent = Math.max(1, Math.ceil(words / 200)) + ' min read';
-
-    const img = document.getElementById('rImg');
-    if (profile.image) {
-        img.src = profile.image; img.alt = profile.name; img.style.display = 'block';
-    } else { img.style.display = 'none'; }
-
-    const body = document.getElementById('rBody');
-    body.innerHTML = '';
-    const text = profile.story || profile.short_bio || '';
-    text.split('\n').filter(s => s.trim()).forEach(para => {
-        const p = document.createElement('p'); p.textContent = para; body.appendChild(p);
-    });
-
-    const overlay = document.getElementById('readerOverlay');
-    overlay.classList.add('open');
-    overlay.scrollTop = 0;
-    document.getElementById('readerCloseBtn').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    document.getElementById('readerBar').style.width = '0';
-    overlay.addEventListener('scroll', onReaderScroll);
-}
-
-/* ════════════════════════════════════════════════════
-   12. DONATION
-════════════════════════════════════════════════════ */
-function setAmount(amount, btn) {
-    document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('customAmount').value = amount;
-}
-
-function processPayment() {
-    const amount     = parseInt(document.getElementById('customAmount').value) || 100;
-    const upi        = 'mrkalal@upi';
-    const intentUrl  = `upi://pay?pa=${upi}&am=${amount}&cu=INR&pn=VelvetIndex`;
-    const isMobile   = /Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-                       || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-
-    if (isMobile) {
-        // Skip modal and instantly open the UPI intent on mobile for a seamless 1-click experience
-        window.location.href = intentUrl;
-    } else {
-        // Display modal with QR code on Desktop
-        const qrData = encodeURIComponent(intentUrl);
-        document.getElementById('qrImg').src =
-            `https://api.qrserver.com/v1/create-qr-code/?size=210x210&margin=8&data=${qrData}`;
-        document.getElementById('qrModal').classList.add('open');
-    }
-}
-
-function closeModal() {
-    document.getElementById('qrModal').classList.remove('open');
-}
-
-function qrOverlayClick(e) {
-    if (e.target === document.getElementById('qrModal')) closeModal();
-}
-
-/* ════════════════════════════════════════════════════
-   13. KEYBOARD SHORTCUTS
-════════════════════════════════════════════════════ */
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeReader(); closeModal(); }
-});
-</script>
-</body>
-</html>
+      <div class="demo-panel" id="panel-badges">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <span class="n-badge">Gold</span>
+          <span class="n-badge n-badge--outl
